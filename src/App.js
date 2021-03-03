@@ -6,61 +6,64 @@ import { ReactComponent as Logo } from "./assets/prifina.svg";
 import { usePrifina } from "@prifina/hooks";
 import Faker from "@prifina/faker";
 
-const StyledBox = styled.div`
-  height: 100vh;
+import {
+  Button,
+  Text,
+  ThemeProvider,
+  Box,
+  Avatar,
+  Select,
+} from "@blend-ui/core";
 
-  padding: 50px;
-  background-color: ${(props) =>
-    props.colors ? props.colors.baseWhite : "#F5F8F7"};
-`;
-/*
-const StyledImg = styled.img`
-  border-radius: 50%;
-`;
-*/
+import {
+  CircularProgress,
+  CircularProgressLabel,
+  ProgressBar,
+  ProgressLabel,
+} from "@blend-ui/progress";
 
-//28w 23h
-const svgWidth = "60px";
-const StyledSVG = styled(Logo)`
-  width: ${svgWidth};
-  height: calc(${svgWidth} * 23 / 28);
-`;
+import Card from "./components/Card";
+
+import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
+const data = [{ name: "Page A", uv: 400, pv: 2400, amt: 2400 }];
 
 export const App = () => {
-  const { currentUser, connector } = usePrifina({
-    connectors: [Faker],
-  });
-  console.log("Logged in user ", currentUser);
-  console.log(
-    "Faker module methods ",
-    connector({ name: "Faker", function: "getInfo" })
-  );
-  const user = connector({ name: "Faker", function: "getName" });
-
-  console.log(currentUser, user);
-
   return (
-    <StyledBox role={"remote"}>
-      <div style={{ textAlign: "center" }}>
-        <StyledSVG />
-      </div>
-      {/*
-      <div style={{ textAlign: "center", marginTop: "10px" }}>
-        <StyledImg src={Image} width={"200px"} />
-      </div>
-      */}
-      <div
-        style={{
-          textAlign: "center",
-          marginTop: "10px",
-          fontSize: "36px",
-          fontWeight: "bold",
-          fontFamily: "Open Sans",
-        }}
-      >
-        Hello! {currentUser.name}
-      </div>
-      <div style={{ marginTop: "10px" }}>{JSON.stringify(user)}</div>
-    </StyledBox>
+    <ThemeProvider>
+      <Box>
+        <Text>Health Overview</Text>
+        <Button variation={"outline"} />
+        <Avatar />
+        <Select />
+        dasasd
+        <CircularProgress size={90} value={20}>
+          <CircularProgressLabel></CircularProgressLabel>
+        </CircularProgress>
+        <Card />
+        <LineChart
+          width={600}
+          height={300}
+          data={data}
+          margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+        >
+          <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+          <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+          <XAxis dataKey="name" />
+          <YAxis />
+        </LineChart>
+        <CircularProgress />
+        <LineChart
+          width={600}
+          height={300}
+          data={data}
+          margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+        >
+          <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+          <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+          <XAxis dataKey="name" />
+          <YAxis />
+        </LineChart>
+      </Box>
+    </ThemeProvider>
   );
 };
